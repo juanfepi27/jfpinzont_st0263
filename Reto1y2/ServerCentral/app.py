@@ -210,5 +210,24 @@ def send_file_owner():
 
     return jsonify({'message':'Owner found', "ownerURL":ownerURL}),200
 
+@server.route('/checkClientNeighbour', methods=['POST'])
+def check_client_neighbour():
+
+    clientRequest = request.get_json()
+    clientId = clientRequest.get("id")
+
+    peer = peers[clientId]
+
+    neighbourId = peer.neighbour
+    if neighbourId != None:
+        neighbour = peers[neighbourId]
+        neighbourURL = "http://"+neighbour.ip+":"+str(neighbour.port)
+
+    else:
+        neighbourURL=None
+    print(neighbourURL)
+
+    return jsonify({'message':'Actual Neighbour', "neighbourURL":neighbourURL}),200
+
 if __name__ == '__main__':
     server.run(debug=True, port=5000)

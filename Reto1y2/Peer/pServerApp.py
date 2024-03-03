@@ -23,6 +23,26 @@ def ask_for_files():
         print("Error while sending information:", response.status_code)
         return jsonify({'message':'Error while sending information'}),response.status_code
 
+@server.route('/checkNeighbour', methods=['POST'])
+def check_neighbour():
+
+    url = serverURL+"/checkClientNeighbour"
+    idResponse = request.get_json()
+    id = idResponse.get("id")
+    body= json.dumps({"id":id})
+    headers = {'Content-Type': 'application/json'}
+
+    response = requests.post(url=url,data=body,headers=headers)
+    
+    # Verify the response
+    if response.status_code == 200:
+        responseBody = response.json()
+        neighbourURL = responseBody['neighbourURL']
+        return jsonify({'message':'Actual neighbour', "neighbourURL":neighbourURL}),200
+    else:
+        print("Error while sending information:", response.status_code)
+        return jsonify({'message':'Error while sending information'}),response.status_code
+
 @server.route('/searchFileOwner', methods=['POST'])
 def search_file_owner():
 

@@ -25,6 +25,7 @@ def display_menu():
             print(Error)
 
         elif(option==1):
+            neighbour = check_neighbour()
             if neighbour !=None:
                 url = neighbour+"/fileToUpload"
                 print(url)
@@ -49,6 +50,7 @@ def display_menu():
         ************************"""
                 print(Error)
         elif(option==2):
+            neighbour = check_neighbour()
             if neighbour !=None:
                 url = neighbour+"/askForFiles"
 
@@ -136,6 +138,22 @@ def display_menu():
     ************************"""
         print(Error)
     
+def check_neighbour():
+    url = pServerURL+"/checkNeighbour"
+    body= json.dumps({"id":id})
+    headers = {'Content-Type': 'application/json'}
+
+    response = requests.post(url=url,data=body,headers=headers)
+
+    # Verify the response
+    if response.status_code == 200:
+        responseBody = response.json()
+        neighbour = responseBody.get("neighbourURL")
+        print(responseBody['message']) 
+        return neighbour
+    else:
+        print("Error while sending information:", response.status_code)
+        return None
 
 if __name__ == '__main__':
 
