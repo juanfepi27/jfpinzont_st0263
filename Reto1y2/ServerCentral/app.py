@@ -194,8 +194,6 @@ def peer_upload():
         print("Error while sending information:", response.status_code)
         return jsonify({'message':'Error while sending information'}),response.status_code
 
-
-
 @server.route('/sendFiles', methods=['GET'])
 def send_files():
 

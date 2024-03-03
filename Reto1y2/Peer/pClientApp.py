@@ -25,111 +25,11 @@ def display_menu():
             print(Error)
 
         elif(option==1):
-            neighbour = check_neighbour()
-            if neighbour !=None:
-                url = neighbour+"/fileToUpload"
-                print(url)
-
-                fileName=input("Write the file name:")
-                body= json.dumps({"idUploader":id,"fileName":fileName})
-                headers = {'Content-Type': 'application/json'}
-
-                response = requests.post(url=url,data=body,headers=headers)
-
-                # Verify the response
-                if response.status_code == 200:
-                    responseBody = response.json()
-                    print(responseBody['message']) 
-                else:
-                    print("Error while sending information:", response.status_code)
-
-            else:
-                Error = """
-        ************************
-        ERROR: You don't have a neighbour yet
-        ************************"""
-                print(Error)
+            upload()
         elif(option==2):
-            neighbour = check_neighbour()
-            if neighbour !=None:
-                url = neighbour+"/askForFiles"
-
-                response = requests.get(url=url)
-                
-                # Verify the response
-                if response.status_code == 200:
-                    responseBody = response.json()
-                    filesList = responseBody['filesList']
-                    
-                    indexList=0
-                    print("")
-                    for file in filesList:
-                        print( "["+str(indexList)+"] -> "+file)
-                        indexList+=1
-
-                    try:
-                        option = int(input("Choose the file that you want to download:"))
-
-                        if (option<0 or option>len(filesList)-1):
-                            Error = """
-                    ************************
-                    ERROR: insert a valid number
-                    ************************"""
-                            print(Error)
-                        else:
-                            url = neighbour+"/searchFileOwner"
-                            body= json.dumps({"selectedFile":filesList[option]})
-                            headers = {'Content-Type': 'application/json'}
-
-                            response = requests.post(url=url,data=body,headers=headers)
-
-                            # Verify the response
-                            if response.status_code == 200:
-                                responseBody = response.json()
-                                ownerURL = responseBody['ownerURL']
-                                
-                                url = ownerURL+"/download"
-                                body= json.dumps({"selectedFile":filesList[option]})
-                                headers = {'Content-Type': 'application/json'}
-
-                                response = requests.post(url=url,data=body,headers=headers)
-
-                                responseBody = response.json()
-                                print(responseBody.get("message"))
-                            else:
-                                print("Error while sending information:", response.status_code)
-
-
-                    except ValueError:
-                        Error = """
-        ************************
-        ERROR: insert a number
-        ************************"""
-                        print(Error)
-
-                else:
-                    print("Error while sending information:", response.status_code)
-            else:
-                Error = """
-        ************************
-        ERROR: You don't have a neighbour yet
-        ************************"""
-                print(Error)
+            download()
         elif(option==3):
-            url = pServerURL+"/notifyLogout"
-            body= json.dumps({"id":id})
-            headers = {'Content-Type': 'application/json'}
-
-            response = requests.post(url=url,data=body,headers=headers)
-
-            # Verify the response
-            if response.status_code == 200:
-                responseBody = response.json()
-                print(responseBody['message']) 
-                exit(0)
-            else:
-                print("Error while sending information:"+ str(response.status_code) + ". Try again")
-
+            logout()
 
     except ValueError:
         Error = """
@@ -138,6 +38,114 @@ def display_menu():
     ************************"""
         print(Error)
     
+def upload():
+    neighbour = check_neighbour()
+    if neighbour !=None:
+        url = neighbour+"/fileToUpload"
+        print(url)
+
+        fileName=input("Write the file name:")
+        body= json.dumps({"idUploader":id,"fileName":fileName})
+        headers = {'Content-Type': 'application/json'}
+
+        response = requests.post(url=url,data=body,headers=headers)
+
+        # Verify the response
+        if response.status_code == 200:
+            responseBody = response.json()
+            print(responseBody['message']) 
+        else:
+            print("Error while sending information:", response.status_code)
+
+    else:
+        Error = """
+************************
+ERROR: You don't have a neighbour yet
+************************"""
+        print(Error)
+
+def download():
+    neighbour = check_neighbour()
+    if neighbour !=None:
+        url = neighbour+"/askForFiles"
+
+        response = requests.get(url=url)
+        
+        # Verify the response
+        if response.status_code == 200:
+            responseBody = response.json()
+            filesList = responseBody['filesList']
+            
+            indexList=0
+            print("")
+            for file in filesList:
+                print( "["+str(indexList)+"] -> "+file)
+                indexList+=1
+
+            try:
+                option = int(input("Choose the file that you want to download:"))
+
+                if (option<0 or option>len(filesList)-1):
+                    Error = """
+            ************************
+            ERROR: insert a valid number
+            ************************"""
+                    print(Error)
+                else:
+                    url = neighbour+"/searchFileOwner"
+                    body= json.dumps({"selectedFile":filesList[option]})
+                    headers = {'Content-Type': 'application/json'}
+
+                    response = requests.post(url=url,data=body,headers=headers)
+
+                    # Verify the response
+                    if response.status_code == 200:
+                        responseBody = response.json()
+                        ownerURL = responseBody['ownerURL']
+                        
+                        url = ownerURL+"/download"
+                        body= json.dumps({"selectedFile":filesList[option]})
+                        headers = {'Content-Type': 'application/json'}
+
+                        response = requests.post(url=url,data=body,headers=headers)
+
+                        responseBody = response.json()
+                        print(responseBody.get("message"))
+                    else:
+                        print("Error while sending information:", response.status_code)
+
+
+            except ValueError:
+                Error = """
+************************
+ERROR: insert a number
+************************"""
+                print(Error)
+
+        else:
+            print("Error while sending information:", response.status_code)
+    else:
+        Error = """
+************************
+ERROR: You don't have a neighbour yet
+************************"""
+        print(Error)
+
+def logout():
+    url = pServerURL+"/notifyLogout"
+    body= json.dumps({"id":id})
+    headers = {'Content-Type': 'application/json'}
+
+    response = requests.post(url=url,data=body,headers=headers)
+
+    # Verify the response
+    if response.status_code == 200:
+        responseBody = response.json()
+        print(responseBody['message']) 
+        exit(0)
+    else:
+        print("Error while sending information:"+ str(response.status_code) + ". Try again")
+
 def check_neighbour():
     url = pServerURL+"/checkNeighbour"
     body= json.dumps({"id":id})

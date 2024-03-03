@@ -93,7 +93,6 @@ def notify_logout():
     else:
         return jsonify({'message':"Error while sending information"}),response.status_code
 
-
 @server.route('/download', methods=['POST'])
 def download():
 
@@ -123,7 +122,6 @@ def file_to_upload():
     responseBody = response.json()
 
     return jsonify({'message':responseBody["message"]}),response.status_code 
-
 
 if __name__ == '__main__':
 
