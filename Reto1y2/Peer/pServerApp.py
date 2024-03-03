@@ -8,7 +8,7 @@ fileList = []
 serverURL="http://127.0.0.1:5000"
 
 @server.route('/askForFiles', methods=['GET'])
-def ask_for_file():
+def ask_for_files():
 
     url = serverURL+"/sendFiles"
 
