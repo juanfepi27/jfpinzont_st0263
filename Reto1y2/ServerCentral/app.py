@@ -109,6 +109,10 @@ def peer_logout():
 
         peerHasFiles.pop(id)
 
+
+    print(id)
+    print(peersIndexes)
+    print(peersIndexes.index(id))
     peersIndexes.pop(peersIndexes.index(id))
 
     # reset neighbours
@@ -135,7 +139,9 @@ def peer_logout():
 
         neighboursOfPeers.pop(id)
 
-    neighboursOfPeers[peers[id].neighbour].pop(neighboursOfPeers[peers[id].neighbour].index(id))
+    if(peers[id].neighbour != None):
+        neighboursOfPeers[peers[id].neighbour].pop(neighboursOfPeers[peers[id].neighbour].index(id))
+        
     peers.pop(id)
 
     print(neighboursOfPeers)

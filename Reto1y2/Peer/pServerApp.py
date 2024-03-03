@@ -75,6 +75,25 @@ def save_file():
 
     return jsonify({'message':'file saved correctly'}),200
 
+@server.route('/notifyLogout', methods=['POST'])
+def notify_logout():
+
+    url = serverURL+"/logout"
+    bodyRequest= request.get_json()
+    body = json.dumps({"id":bodyRequest.get("id")})
+    headers = {'Content-Type': 'application/json'}
+
+    response = requests.post(url=url,data=body,headers=headers)
+
+    # Verify the response
+    if response.status_code == 200:
+        responseBody = response.json()
+        print(responseBody['message'])
+        return jsonify({'message':responseBody['message']}),200
+    else:
+        return jsonify({'message':"Error while sending information"}),response.status_code
+
+
 @server.route('/download', methods=['POST'])
 def download():
 

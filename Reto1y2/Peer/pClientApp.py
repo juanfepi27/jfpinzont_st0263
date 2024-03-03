@@ -116,7 +116,7 @@ def display_menu():
         ************************"""
                 print(Error)
         elif(option==3):
-            url = "http://127.0.0.1:5000/logout"
+            url = pServerURL+"/notifyLogout"
             body= json.dumps({"id":id})
             headers = {'Content-Type': 'application/json'}
 
@@ -126,10 +126,10 @@ def display_menu():
             if response.status_code == 200:
                 responseBody = response.json()
                 print(responseBody['message']) 
+                exit(0)
             else:
-                print("Error while sending information:", response.status_code)
+                print("Error while sending information:"+ str(response.status_code) + ". Try again")
 
-            exit(0)
 
     except ValueError:
         Error = """
