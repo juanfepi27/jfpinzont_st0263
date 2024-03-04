@@ -10,6 +10,8 @@
 
 **Objetivo:** Diseñar e implementar una red P2P para soportar un sistema distribuido de manejo de archivos.
 
+**Sustentación:** presionando [aquí](https://eafit-my.sharepoint.com/:v:/g/personal/jfpinzont_eafit_edu_co/EVTzQbQimuFIqAFPKB_VXmwBXrqjZcjPuuTdaLaeWo-JBw?e=l27usd)
+
 # 1. breve descripción de la actividad
 
 ## 1.1. Que aspectos cumplió o desarrolló de la actividad propuesta por el profesor 
@@ -25,7 +27,9 @@ Además, el cliente puede conectarse y desconectarse a la red. También se imple
 - Tampoco se guardan los datos de IP ni Puerto dinámicamente, cuando se inician el pServer y el pClient piden esta información por medio de la consola.
 - No se libera un directorio donde se encuentran los archivos, se deben "subir" a la red mediante el servicio de upload y se almacena el índice en el pServer
 
-# 2. información general de diseño de alto nivel, arquitectura, patrones, mejores prácticas utilizadas.
+# 2. información general de diseño de alto nivel, arquitectura.
+![arqReto1y2](https://github.com/juanfepi27/jfpinzont_st0263/assets/85038450/64e52364-5540-4955-b0a4-f8027fa9fb8e)
+
 
 # 3. Descripción del ambiente de desarrollo y técnico: 
 
@@ -152,7 +156,7 @@ Se hará el procedimiento para la conexión de 1 Peer
 
 3. Finalmente ya está configurado para su uso, sin embargo no puede usarse por completo hasta que se conecte otro peer, para ello replique el paso 2.
 
-> Finalmente para más detalle visualize el video explicativo, presionando aquí
+> Finalmente para más detalle visualize el video explicativo, presionando [aquí](https://eafit-my.sharepoint.com/:v:/g/personal/jfpinzont_eafit_edu_co/EVTzQbQimuFIqAFPKB_VXmwBXrqjZcjPuuTdaLaeWo-JBw?e=l27usd)
 
 # referencias:
 Toda la información requerida se tomaron de IA generativas, estas no brindan la totalidad de las fuentes que utilizan, sin embargo adjunto las conversaciones utilizadas para el sustento de este proyecto:
